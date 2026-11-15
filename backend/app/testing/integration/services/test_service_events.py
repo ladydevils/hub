@@ -115,7 +115,7 @@ def test_create_event(
     result = create_event(event, db_session)
 
     new_event = db_session.scalar(select(Event).where(Event.id == result.id))
-    assert new_event is not None
+    assert new_event is not None, f"Event must be in events table"
 
     new_practice = db_session.scalar(
         select(Practice).where(Practice.id == new_event.id)
