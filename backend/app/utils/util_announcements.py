@@ -3,11 +3,17 @@ from app.core.timezone import LOCAL_TZ
 
 
 def format_expired_time(expiration_date, expiration_time):
-    """Converts expired datetime into a string"""
-    expires_at = datetime.strptime(
-        f"{expiration_date} {expiration_time}",
-        "%m-%d-%Y %I:%M %p",
-    ).replace(tzinfo=LOCAL_TZ)
+    """Converts expired datetime of an announcement into a string"""
+
+    try:
+        expires_at = datetime.strptime(
+            f"{expiration_date} {expiration_time}",
+            "%m-%d-%Y %I:%M %p",
+        ).replace(tzinfo=LOCAL_TZ)
+    except ValueError as e:
+        raise ValueError(
+            "The announcement data does not match the expected structure for its type."
+        ) from e
 
     return expires_at
 

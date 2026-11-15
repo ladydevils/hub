@@ -23,6 +23,13 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_db():
+
+    # drop the db schema in case of previous interruption or crash
+    with engine.connect() as conn:
+        conn.execute(text("DROP SCHEMA public CASCADE;"))
+        conn.execute(text("CREATE SCHEMA public;"))
+        conn.commit()
+
     # create the db schema
     schema_sql = Path(__file__).parent.parent.parent.parent / "db/schema.sql"
 
@@ -66,7 +73,7 @@ def setup_test_db():
 
     yield
 
-    # drop the db schema
+    # normal teardown
     with engine.connect() as conn:
         conn.execute(text("DROP SCHEMA public CASCADE;"))
         conn.execute(text("CREATE SCHEMA public;"))
