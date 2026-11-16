@@ -36,7 +36,7 @@ export default function EditAnnouncement({ params }: { params: Promise<{ announc
 
     if (isLoading) {
         return (
-            <div className="absolute inset-0 bg-black/60 z-100 flex" onClick={close}>
+            <div className="absolute inset-0 bg-black/60 z-100 flex">
                 <div className="flex flex-1 min-w-0 h-full items-center justify-center py-15 px-8 
                 z-110" >
                     <div className="contents" onClick={(e) => e.stopPropagation()}>
@@ -55,7 +55,7 @@ export default function EditAnnouncement({ params }: { params: Promise<{ announc
 
 
     return (
-        <div className="absolute inset-0 bg-black/60 z-100 flex" onClick={close}>
+        <div className="absolute inset-0 bg-black/60 z-100 flex">
             <div className="flex flex-1 min-w-0 h-full items-center justify-center py-15 px-8 
             z-110" >
                 <div className="contents" onClick={(e) => e.stopPropagation()}>
