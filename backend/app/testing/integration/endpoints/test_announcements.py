@@ -43,7 +43,7 @@ def test_get_announcements_endpoint(client, db_session):
     assert new_announcement.id in ids, f"Announcement ID should be in the response IDs"
 
 
-def test_get_announcement_form_response_endpoint(client, db_session):
+def test_get_announcement_form_responses_endpoint(client, db_session):
     new_announcement = create_sample_announcement(db_session)
     response = client.get(f"/announcements/{new_announcement.id}")
 

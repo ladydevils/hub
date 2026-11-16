@@ -160,9 +160,9 @@ def test_get_announcement_form_response(
     ), f"Expected {expiration_time}, got {results["expiration_time"] }"
 
 
-def test_get_announcement_form_response_not_found(db_session: Session):
+def test_get_announcement_form_responses_not_found(db_session: Session):
     with pytest.raises(HTTPException) as e:
-        get_announcement_form_response(-1, db_session)
+        get_announcement_form_responses(-1, db_session)
 
     assert e.value.status_code == status.HTTP_404_NOT_FOUND
 

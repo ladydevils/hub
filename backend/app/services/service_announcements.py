@@ -64,7 +64,7 @@ def get_announcements(db: Session):
     ]
 
 
-def get_announcement_form_response(announcement_id, db: Session):
+def get_announcement_form_responses(announcement_id, db: Session):
     """Retrieves an announcement's previous form response details by its id"""
 
     announcement = db.scalar(
