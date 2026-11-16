@@ -1,5 +1,4 @@
 import pytest
-from unittest.mock import MagicMock
 
 from datetime import datetime, timedelta, timezone
 from app.core.timezone import LOCAL_TZ

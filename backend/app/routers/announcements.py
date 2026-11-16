@@ -54,8 +54,10 @@ def get_announcements_endpoint(db: Session = Depends(get_db)):
 
 
 @router.get("/{announcement_id}", response_model=AnnouncementEditResponse)
-def get_announcement_endpoint(announcement_id: int, db: Session = Depends(get_db)):
-    return get_announcement(announcement_id, db)
+def get_announcement_form_response_endpoint(
+    announcement_id: int, db: Session = Depends(get_db)
+):
+    return get_announcement_form_response(announcement_id, db)
 
 
 @router.patch("/{announcement_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from datetime import datetime, timezone, timedelta
 
 from sqlalchemy.orm import Session
@@ -21,9 +21,12 @@ def create_announcement(announcement, db: Session):
     current_user = 1
 
     # datetime logic
-    expires_at = format_expired_time(
-        announcement.expiration_date, announcement.expiration_time
-    )
+    try:
+        expires_at = format_expired_time(
+            announcement.expiration_date, announcement.expiration_time
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
     new = Announcement(
         content=announcement.content,
@@ -35,6 +38,8 @@ def create_announcement(announcement, db: Session):
     db.add(new)
     db.commit()
     db.refresh(new)
+
+    return new
 
 
 def get_announcements(db: Session):
@@ -59,15 +64,17 @@ def get_announcements(db: Session):
     ]
 
 
-def get_announcement(announcement_id, db: Session):
-    """Retrieves an announcement's details by its id"""
+def get_announcement_form_response(announcement_id, db: Session):
+    """Retrieves an announcement's previous form response details by its id"""
 
     announcement = db.scalar(
         select(Announcement).where(Announcement.id == announcement_id)
     )
 
     if not announcement:
-        raise HTTPException(status_code=404, detail="Announcement not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Announcement not found"
+        )
 
     expires_at = announcement.expires_at.astimezone(LOCAL_TZ)
 
@@ -92,7 +99,9 @@ def update_announcement(announcement_id, update, db: Session):
     )
 
     if not announcement:
-        raise HTTPException(status_code=404, detail="Announcement not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Announcement not found"
+        )
 
     expires_at = format_expired_time(update.expiration_date, update.expiration_time)
 
@@ -111,7 +120,9 @@ def update_pin(announcement_id, update, db: Session):
     )
 
     if not announcement:
-        raise HTTPException(status_code=404, detail="Announcement not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Announcement not found"
+        )
 
     announcement.pinned = update.pinned
     db.commit()
@@ -127,7 +138,9 @@ def remove_announcement(announcement_id, db: Session):
     )
 
     if not announcement:
-        raise HTTPException(status_code=404, detail="Announcement not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Announcement not found"
+        )
 
     announcement.expires_at = datetime.now(timezone.utc) - timedelta(
         minutes=minutes_before
