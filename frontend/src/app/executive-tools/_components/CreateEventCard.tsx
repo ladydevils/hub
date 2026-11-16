@@ -47,6 +47,7 @@ export function CreateEventCard({ oldEvent }: Props) {
     const router = useRouter();
     const [error, setError] = useState<string>("");
     const [submitError, setSubmitError] = useState<string>("");
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     // page 1 form fields
     const [name, setName] = useState<string>(oldEvent?.name ?? "");
@@ -133,6 +134,8 @@ export function CreateEventCard({ oldEvent }: Props) {
     };
 
     const handleSubmit = async () => {
+        if (isSubmitting) return;
+
         const missingFields: string[] = [];
 
         if (!missingRequiredInfo && category === "tournament") {
@@ -145,9 +148,11 @@ export function CreateEventCard({ oldEvent }: Props) {
             console.log("blocked by missing fields", missingFields);
             setError(`Please fill in: ${missingFields.join(", ")}`);
             return;
-        }    
+        } 
         
         // if everything is good, call a post request
+        setIsSubmitting(true);
+
         const payload = {
             name: name.trim(),
             category: category.trim(),
@@ -196,7 +201,9 @@ export function CreateEventCard({ oldEvent }: Props) {
             }    
         } catch (err) {
             console.error(err)
-            setSubmitError("Something went wrong while saving the event. Please try again.")
+            setSubmitError("Something went wrong while saving the event. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
 
     };
@@ -458,7 +465,7 @@ export function CreateEventCard({ oldEvent }: Props) {
                     <div className="mt-auto mb-1 flex gap-5 items-center text-lg select-none">
                         <button onClick={ handleBack } className={`flex-[1] font-semibold rounded-[3.5px] p-[6px] bg-muted-1 hover:bg-muted-1/60 hover:shadow-button hover:cursor-pointer transition-all`}>Back</button>
 
-                        <button onClick={ handleSubmit } className={`flex-[2] font-semibold rounded-[3.5px] p-[6px] bg-primary hover:bg-[hsl(242,73%,52%)] hover:shadow-button hover:cursor-pointer transition-all`}>{ `Save as ${ missingRequiredInfo || !scheduled ? "Tentative" : "Scheduled"} `}</button>
+                        <button onClick={ handleSubmit } disabled={ isSubmitting } className={`flex-[2] font-semibold rounded-[3.5px] p-[6px] bg-primary hover:bg-[hsl(242,73%,52%)] hover:shadow-button ${isSubmitting ? "cursor-wait opacity-60" : "hover:cursor-pointer"} transition-all`}>{ `Save as ${ missingRequiredInfo || !scheduled ? "Tentative" : "Scheduled"} `}</button>
 
                         <button onClick={ handleCancel } className="h-full flex px-3 items-center underline text-muted-1 hover:cursor-pointer hover:text-foreground">Cancel</button>
                     </div>

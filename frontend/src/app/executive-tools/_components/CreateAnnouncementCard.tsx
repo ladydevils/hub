@@ -30,6 +30,7 @@ export function CreateAnnouncementCard({ oldAnnouncement }: Props) {
     const router = useRouter();
     const [error, setError] = useState<string>("");
     const [submitError, setSubmitError] = useState<string>("");
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     const placeholderDate = getFormattedDate(7);
 
@@ -49,6 +50,9 @@ export function CreateAnnouncementCard({ oldAnnouncement }: Props) {
     };
 
     const handleSubmit = async () => {
+        console.log("handleSubmit called, isSubmitting =", isSubmitting);
+        if (isSubmitting) return;
+
         const missingFields: string[] = [];
 
         if (content.trim() === "") missingFields.push("Announcement Message")
@@ -59,6 +63,8 @@ export function CreateAnnouncementCard({ oldAnnouncement }: Props) {
             setError(`Please fill in: ${missingFields.join(", ")}`);
             return;
         }
+
+        setIsSubmitting(true);
         
         const payload = {
             content: content,
@@ -81,7 +87,9 @@ export function CreateAnnouncementCard({ oldAnnouncement }: Props) {
             }
         } catch (err) {
             console.error(err)
-            setSubmitError("Something went wrong while creating/updating the announcement. Please try again.")
+            setSubmitError("Something went wrong while creating/updating the announcement. Please try again.");
+        } finally {
+            setIsSubmitting(false);
         }
         
         
@@ -134,7 +142,7 @@ export function CreateAnnouncementCard({ oldAnnouncement }: Props) {
                 )}
 
                 <div className="mt-auto mb-1 flex gap-5 items-center text-lg select-none">
-                    <button onClick={ handleSubmit } className={`flex-1 font-semibold rounded-[3.5px] p-[6px] bg-primary hover:bg-[hsl(242,73%,52%)] hover:shadow-button hover:cursor-pointer transition-all`}>{ oldAnnouncement?.id ?"Update" : "Submit" }</button>
+                    <button onClick={ handleSubmit } disabled={ isSubmitting } className={`flex-1 font-semibold rounded-[3.5px] p-[6px] bg-primary hover:bg-[hsl(242,73%,52%)] hover:shadow-button ${isSubmitting ? "cursor-wait opacity-60" : "hover:cursor-pointer"} transition-all`}>{ oldAnnouncement?.id ?"Update" : "Submit" }</button>
                     <button onClick={ handleCancel } className="h-full flex px-3 items-center underline text-muted-1 hover:cursor-pointer hover:text-foreground">Cancel</button>
                 </div>
                
