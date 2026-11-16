@@ -41,19 +41,26 @@ class PinUpdate(BaseModel):
 router = APIRouter(prefix="/announcements", tags=["announcements"])
 
 
-@router.post("/", status_code=status.HTTP_204_NO_CONTENT)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_announcement_endpoint(
     announcement: AnnouncementCreate, db: Session = Depends(get_db)
 ):
-    return create_announcement(announcement, db)
+    create_announcement(announcement, db)
+    return  # returning nothing for now, but will update when announcement's detail page is created
 
 
-@router.get("/", response_model=list[AnnouncementResponse])
+@router.get(
+    "/", response_model=list[AnnouncementResponse], status_code=status.HTTP_200_OK
+)
 def get_announcements_endpoint(db: Session = Depends(get_db)):
     return get_announcements(db)
 
 
-@router.get("/{announcement_id}", response_model=AnnouncementEditResponse)
+@router.get(
+    "/{announcement_id}",
+    response_model=AnnouncementEditResponse,
+    status_code=status.HTTP_200_OK,
+)
 def get_announcement_form_response_endpoint(
     announcement_id: int, db: Session = Depends(get_db)
 ):
@@ -64,16 +71,19 @@ def get_announcement_form_response_endpoint(
 def update_announcement_endpoint(
     announcement_id: int, update: AnnouncementCreate, db: Session = Depends(get_db)
 ):
-    return update_announcement(announcement_id, update, db)
+    update_announcement(announcement_id, update, db)
+    return
 
 
 @router.patch("/{announcement_id}/pin", status_code=status.HTTP_204_NO_CONTENT)
 def update_pin_endpoint(
     announcement_id: int, update: PinUpdate, db: Session = Depends(get_db)
 ):
-    return update_pin(announcement_id, update, db)
+    update_pin(announcement_id, update, db)
+    return
 
 
 @router.patch("/{announcement_id}/remove", status_code=status.HTTP_204_NO_CONTENT)
 def remove_announcement_endpoint(announcement_id: int, db: Session = Depends(get_db)):
-    return remove_announcement(announcement_id, db)
+    remove_announcement(announcement_id, db)
+    return

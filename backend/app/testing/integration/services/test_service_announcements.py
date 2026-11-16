@@ -162,7 +162,7 @@ def test_get_announcement_form_response(
 
 def test_get_announcement_form_response_not_found(db_session: Session):
     with pytest.raises(HTTPException) as e:
-        get_announcement_form_response(9999, db_session)
+        get_announcement_form_response(-1, db_session)
 
     assert e.value.status_code == status.HTTP_404_NOT_FOUND
 
