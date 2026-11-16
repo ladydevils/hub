@@ -149,7 +149,7 @@ def test_get_announcement_form_response(
 
     created_announcement = create_announcement(announcement, db_session)
 
-    results = get_announcement_form_response(
+    results = get_announcement_form_responses(
         created_announcement.id, db_session
     )  # converts data from db back format for client
     assert (
