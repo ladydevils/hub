@@ -102,6 +102,15 @@ def get_event_details_endpoint(event_id: int, db: Session = Depends(get_db)):
     return get_event_details(event_id, db)  # from service_events.py
 
 
+@router.get(
+    "/{event_id}/form-responses",
+    response_model=EventEditResponse,
+    status_code=status.HTTP_200_OK,
+)
+def get_event_form_responses_endpoint(event_id: int, db: Session = Depends(get_db)):
+    return get_event_form_responses(event_id, db)  # from service_events.py
+
+
 @router.patch("/{event_id}", status_code=status.HTTP_204_NO_CONTENT)
 def update_event_endpoint(
     event_id: int, updated_event: EventCreate, db: Session = Depends(get_db)
