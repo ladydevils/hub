@@ -98,6 +98,13 @@ def test_get_event_details_endpoint_event_not_found(client):
     assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
+def test_get_event_form_responses_endpoint(client, db_session):
+    new_event = create_sample_event(db_session)
+    response = client.get(f"/events/{new_event.id}/form-responses")
+
+    assert response.status_code == status.HTTP_200_OK
+
+
 def test_update_event_endpoint(client, db_session):
     original_event = create_sample_event(db_session)
 
