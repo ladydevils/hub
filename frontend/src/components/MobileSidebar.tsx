@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import LadyDevilsLogo from "@/assets/LadyDevilsVectorFinal.svg";
 import CrossIcon from "@/assets/icons/cross.svg";
+import { Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 
 
 export default function MobileSidebar() {
@@ -35,9 +36,20 @@ export default function MobileSidebar() {
                     <button className="sidebar:hidden mr-2 hover:bg-black/20 group pl-1 pb-1 hover:cursor-pointer ml-auto transition-all duration-100" onClick={mobile.closeSidebar}>
                         <CrossIcon className="text-foreground/20 mt-1 mr-1 group-hover:text-foreground/40"/>
                     </button>
-                    <Link href="/" title="Homepage" onClick={mobile.closeSidebar}>
-                        <LadyDevilsLogo className="w-[6rem] h-auto hover:scale-105 transition-transform mx-auto"/>
-                    </Link>
+                    <div className="flex flex-col items-center">
+                    <Tooltip>
+                        <TooltipTrigger delay={250}>
+                            <Link href="/" onClick={mobile.closeSidebar} >
+                                <LadyDevilsLogo className="w-[6rem] h-auto hover:scale-105 transition-transform mx-auto"/>
+                            </Link>
+                        </TooltipTrigger>
+                        <TooltipContent side="right" className="text-sm" arrowClassName="border-b-1 border-l-1 border-primary/80 shadow-[-1px_1px_0_0_color-mix(in_srgb,var(--color-muted-1)_50%,transparent)] ">
+                            <p>Home</p>
+                        </TooltipContent>
+ 
+                    </Tooltip>
+                    </div>
+                    
                 </div>
                 <SidebarContent/>
             </div>

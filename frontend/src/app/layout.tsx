@@ -7,6 +7,7 @@ import SidebarContentProvider from "@/contexts/SidebarContext";
 import CurrentUserProvider from "@/contexts/CurrentUserContext";
 import ModalProvider from "@/contexts/ModalContext";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const plusJakartaSans  = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -37,21 +38,23 @@ export default function RootLayout({
       lang="en"
       className={`${plusJakartaSans.variable} ${rajdhani.variable} h-full antialiased`}
     >
-      <CurrentUserProvider>
-        <ModalProvider>
-          <SemesterProvider>
-          <SidebarContentProvider>
-            <body className="h-screen flex scrollbar-thumb-muted-2 scrollbar-track-transparent overflow-hidden">
-              <AppRouterCacheProvider>
-                <AppLayout modal={modal}>
-                  {children}
-                </AppLayout>
-              </AppRouterCacheProvider>
-            </body>
-          </SidebarContentProvider>
-        </SemesterProvider>
-        </ModalProvider>
-      </CurrentUserProvider>
+      <body className="h-screen flex scrollbar-thumb-muted-2 scrollbar-track-transparent overflow-hidden">
+        <TooltipProvider>
+          <CurrentUserProvider>
+            <ModalProvider>
+              <SemesterProvider>
+                <SidebarContentProvider>
+                  <AppRouterCacheProvider>
+                    <AppLayout modal={modal}>
+                      {children}
+                    </AppLayout>
+                  </AppRouterCacheProvider>
+                </SidebarContentProvider>
+              </SemesterProvider>
+            </ModalProvider>
+          </CurrentUserProvider>
+        </TooltipProvider>
+      </body>
     </html>
   );
 }
