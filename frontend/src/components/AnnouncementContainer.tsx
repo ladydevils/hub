@@ -56,7 +56,7 @@ export default function AnnouncementContainer() {
 
     return (
         <div className="w-full justify-between rounded-[5px] border-muted-2 relative">
-            <div className="border-b-2 border-b-muted-2/50 rounded-t-[5px] pl-3 sm:text-lg">
+            <div className="border-b-1 border-b-muted-2/50 rounded-t-[5px] pl-3 sm:text-xl font-semibold">
                 Announcements
             </div>
 

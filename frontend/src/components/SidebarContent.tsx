@@ -38,7 +38,7 @@ export default function SidebarContent() {
                     const isActive = activePath.startsWith(item.href);
 
                     return (
-                        <Link href={ item.href } onClick={mobile.closeSidebar} className={`rounded-sm w-full text-center text-base p-1 hover:bg-primary hover:scale-102 hover:rounded-md transition-all duration-80 ${ isActive ? "bg-muted-1" : ""}`} key={ item.label }>
+                        <Link href={ item.href } onClick={mobile.closeSidebar} className={`rounded-sm w-full text-center text-base font-medium p-1 hover:bg-primary hover:scale-102 hover:rounded-md transition-all duration-80 ${ isActive ? "bg-muted-1" : ""}`} key={ item.label }>
                             { item.label }
                         </Link>
                     )

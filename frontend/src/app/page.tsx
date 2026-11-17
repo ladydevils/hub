@@ -121,10 +121,10 @@ export default function Home() {
       <div className="w-full max-w-[1050px] mx-auto px-5 mt-2 overflow-y-auto scrollbar-gutter-auto mb-2">
         <AnnouncementContainer/>
 
-        <div className="mt-3 sm:text-lg">
+        <div className="mt-3 sm:text-xl">
           <div className="flex">
-            <p>Upcoming</p>
-            <div className="ml-auto text-muted-1 hover:text-foreground hover:cursor-pointer">
+            <p className="font-semibold">Upcoming</p>
+            <div className="ml-auto text-muted-1 hover:text-foreground hover:cursor-pointer text-lg">
               <Link href={ "/events" }>See All Events</Link>
               <OpenPageIcon className="inline text-[0.6rem] ml-2"/>
             </div>
@@ -138,8 +138,8 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-4 sm:text-lg">
-          <p>Wristband Playbook</p>
+        <div className="mt-4 sm:text-xl">
+          <p className="font-semibold">Wristband Playbook</p>
           <div className="max-w-[850px] mx-auto">
             <Carousel items={ plays } compactOnShortScreen={ !!isShortScreen }/>
           </div>
