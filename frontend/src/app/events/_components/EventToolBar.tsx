@@ -38,7 +38,7 @@ export default function EventToolBar({ past, setPast, activeFilter, setActiveFil
                     <StatusPill display={` ${ eventCount } ${ eventCount === 1 ? "Event" : "Events"}`}/>
 
                     { isExec &&
-                        <Link href="/executive-tools/create-event" className="flex gap-2 bg-white rounded-[5px] items-center justify-center px-3 py-1 text-primary font-semibold hover:bg-primary-light hover:text-card">
+                        <Link href="/executive-tools/create-event" className="flex gap-2 bg-foreground rounded-[5px] items-center justify-center px-3 py-1 text-primary font-semibold hover:bg-primary-light hover:text-card outline-2 outline-primary">
                             <AddIcon className="text-sm"/>
                             <span className="text-lg ">Add Event</span>
                         </Link>
