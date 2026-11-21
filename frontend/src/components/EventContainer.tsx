@@ -33,14 +33,14 @@ export function EventContainer({ eventList, skeletonCount, isLoading = false, on
 
                 {eventList.map((event) => {
                     if (event.category === "practice") {
-                        return <PracticeCard key={ event.id } { ...event } onRefetch={onRefetch} />;
+                        return <PracticeCard key={ event.id } { ...(event as PracticeProps) } onRefetch={onRefetch} />;
                     }
 
                     if (event.category === "tournament") {
-                        return <TournamentCard key={ event.id } { ...event } onRefetch={onRefetch}/>;
+                        return <TournamentCard key={ event.id } { ...(event as TournamentProps ) } onRefetch={onRefetch}/>;
                     }
 
-                    return <GenericEventCard key={ event.id } { ...event } onRefetch={onRefetch}/>
+                    return <GenericEventCard key={ event.id } { ...(event as EventProps) } onRefetch={onRefetch}/>
                 })}
                     
         </div>
