@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, Suspense } from "react";
 import { SemesterContext } from "@/contexts/SemesterContext";
 import Header from "@/components/Header";
 import PlayFilter from "./_components/PlayFilter";
@@ -11,7 +11,7 @@ import SearchBar from "@/components/SearchBar";
 import useScrollFade from "@/hooks/useScrollFade";
 import ScrollTop from "@/components/ScrollTop";
 
-export default function Playbook() {
+function PlaybookContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -194,4 +194,13 @@ export default function Playbook() {
         </div>
     </div>
   );
+};
+
+export default function Playbook() {
+  return (
+    <Suspense fallback={null}>
+      <PlaybookContent />
+    </Suspense>
+  );
 }
+

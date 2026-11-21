@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, Suspense } from "react";
 import { SemesterContext } from "@/contexts/SemesterContext";
 import Header from "@/components/Header";
 import RosterToolBar from "./_components/RosterToolBar";
@@ -10,7 +10,7 @@ import useScrollFade from "@/hooks/useScrollFade";
 import { slugify, unslugify } from "@/lib/slug";
 
 
-export default function Roster() {
+function RosterContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -54,3 +54,11 @@ export default function Roster() {
 
   );
 };
+
+export default function Roster() {
+  return (
+    <Suspense fallback={null}>
+      <RosterContent />
+    </Suspense>
+  );
+}

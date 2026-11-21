@@ -11,7 +11,7 @@ import ScrollTop from "@/components/ScrollTop";
 
 import api from "@/lib/api";
 
-export function EventsContent() {
+function EventsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
