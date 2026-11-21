@@ -16,8 +16,7 @@ export default function FullEvent({ params }: { params: Promise<{ eventId: strin
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string>("");
 
-    useEffect(() => {
-        const fetchEvent = async () => {
+    const fetchEvent = async () => {
             try {
                 const response = await api.get(`/events/${eventId}`)
                 setEvent(response.data)
@@ -29,6 +28,7 @@ export default function FullEvent({ params }: { params: Promise<{ eventId: strin
             }
         };
 
+    useEffect(() => {
         fetchEvent()
     }, [eventId]);
 
@@ -45,15 +45,15 @@ export default function FullEvent({ params }: { params: Promise<{ eventId: strin
             <div className="flex flex-1 min-w-0 h-full items-center py-12 px-8">
             
             { event.category === "practice" && 
-                <PracticeDetails { ...event }/> 
+                <PracticeDetails { ...event } onRefetch={fetchEvent} /> 
             }
 
             { event.category === "tournament" && 
-                <TournamentDetails { ...event }/>  
+                <TournamentDetails { ...event } onRefetch={fetchEvent}/>  
             }
 
             { (event.category !== "practice" && event.category !== "tournament") &&
-                <EventDetails { ...event }/>  
+                <EventDetails { ...event } onRefetch={fetchEvent}/>  
             }
             
             </div>
