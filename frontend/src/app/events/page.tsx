@@ -85,7 +85,9 @@ export default function Events() {
 
     const filtered = events.filter((event) => {
       const matchesCategory = activeFilter === "all" || categories.includes(event.category);
-      const matchesTiming = past ? event.endDate < now : event.endDate >= now;
+      const matchesTiming = past
+          ? (event.endDate !== null && event.endDate < now)
+          : (event.endDate === null || event.endDate >= now);
       return matchesCategory && matchesTiming;
     });
 
