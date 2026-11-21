@@ -24,7 +24,7 @@ import EventEllipsis from "./EventEllipsis";
 
 export type PracticeProps = {
     id: number;
-    category: string;
+    category: "practice";
     eventName: string;
     locationName: string;
     dateLabel: string;
@@ -39,7 +39,7 @@ export type PracticeProps = {
 // types for practice details card
 export type ExtendedPracticeProps = {
     id: number;
-    category: string;
+    category: "practice";
     eventName: string;
     locationName: string;
     locationAddress: string;
