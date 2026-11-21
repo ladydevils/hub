@@ -45,15 +45,15 @@ export default function FullEvent({ params }: { params: Promise<{ eventId: strin
             <div className="flex flex-1 min-w-0 h-full items-center py-12 px-8">
             
             { event.category === "practice" && 
-                <PracticeDetails { ...event } onRefetch={fetchEvent} /> 
+                <PracticeDetails { ...(event as ExtendedPracticeProps) } onRefetch={fetchEvent} /> 
             }
 
             { event.category === "tournament" && 
-                <TournamentDetails { ...event } onRefetch={fetchEvent}/>  
+                <TournamentDetails { ...(event as ExtendedTournamentProps) } onRefetch={fetchEvent}/>  
             }
 
             { (event.category !== "practice" && event.category !== "tournament") &&
-                <EventDetails { ...event } onRefetch={fetchEvent}/>  
+                <EventDetails { ...(event as ExtendedEventProps)  } onRefetch={fetchEvent}/>  
             }
             
             </div>

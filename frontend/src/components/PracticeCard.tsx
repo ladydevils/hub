@@ -39,7 +39,7 @@ export type PracticeProps = {
 // types for practice details card
 export type ExtendedPracticeProps = {
     id: number;
-    category: "practice";
+    category: string;
     eventName: string;
     locationName: string;
     locationAddress: string;

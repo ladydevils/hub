@@ -24,7 +24,7 @@ import { RVSPList } from "./events/RSVPList";
 
 export type TournamentProps = {
     id: number;
-    category: "tournament";
+    category: string;
     eventName: string;
     locationName: string;
     dateLabel: string;
@@ -41,7 +41,7 @@ export type TournamentProps = {
 
 export type ExtendedTournamentProps = {
     id: number;
-    category: "tournament";
+    category: string;
     eventName: string;
     locationName: string;
     locationAddress: string;

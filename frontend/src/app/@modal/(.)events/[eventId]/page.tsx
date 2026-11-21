@@ -60,15 +60,15 @@ export default function FullEvent({ params }: { params: Promise<{ eventId: strin
         z-110" >
             <div className="contents" onClick={(e) => e.stopPropagation()}>
                 { event.category === "practice" && 
-                    <PracticeDetails { ...event } onRefetch={fetchEvent}/> 
+                    <PracticeDetails { ...(event as ExtendedPracticeProps) } onRefetch={fetchEvent}/> 
                 }
     
                 { event.category === "tournament" && 
-                    <TournamentDetails { ...event } onRefetch={fetchEvent}/>  
+                    <TournamentDetails { ...(event as ExtendedTournamentProps) } onRefetch={fetchEvent}/>  
                 }
     
                 { (event.category !== "practice" && event.category !== "tournament") &&
-                    <EventDetails { ...event } onRefetch={fetchEvent}/>  
+                    <EventDetails { ...(event as ExtendedEventProps) } onRefetch={fetchEvent}/>  
                 }
             </div>
         </div>
