@@ -4,10 +4,10 @@
 import EditAnnouncementModalView from "@/components/static_export/EditAnnouncementModalView";
 
 export async function generateStaticParams() {
-    return [{ announcementId: "placeholder" }];
-};
+    return [];
+}
 
 export default async function EditAnnouncementPage({ params }: { params: Promise<{ announcementId: string }> }) {
     const { announcementId } = await params;
     return <EditAnnouncementModalView announcementId={announcementId} />;
-};
+}

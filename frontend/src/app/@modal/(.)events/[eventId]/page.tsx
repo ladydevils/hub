@@ -4,10 +4,10 @@
 import FullEventModalView from "@/components/static_export/FullEventModalView";
 
 export async function generateStaticParams() {
-    return [{ eventId: "placeholder" }];
-};
+    return [];
+}
 
 export default async function FullEventModalPage({ params }: { params: Promise<{ eventId: string }> }) {
     const { eventId } = await params;
     return <FullEventModalView eventId={eventId} />;
-};
+}
