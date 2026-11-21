@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { responses } from "./RSVPList";
+import { RegisterPlayerView, RegisterExecView } from "./RSVPList";
 import { StatusPill } from "../StatusPill";
 import useScrollFade from "@/hooks/useScrollFade";
 
 type props = {
-    responses: responses
+    responses: RegisterPlayerView | RegisterExecView ;
 };
 
 export default function RegisterTable({ responses }: props) {

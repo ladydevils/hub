@@ -235,13 +235,17 @@ export function TournamentDetails(tournament : ExtendedTournamentProps & { onRef
                                 handleRSVPOpen={ handleRSVPOpen }
                                 handleRSVPClose={ handleRSVPClose }
                                 pageScrollRef={ scrollContainer }
-                                maxHeight={ RSVPHeight }/>
+                                maxHeight={ RSVPHeight }
+                                isTournament={true}
+                            />
                         )}
 
                         { !isExec && (
                             <RVSPList label="Registered" handleRSVPOpen={ handleRSVPOpen } handleRSVPClose={ handleRSVPClose }
                             pageScrollRef={ scrollContainer }
-                            maxHeight={ RSVPHeight }/>
+                            maxHeight={ RSVPHeight }
+                            isTournament={true}
+                        />
                         )}   
                     </div>
                     )}

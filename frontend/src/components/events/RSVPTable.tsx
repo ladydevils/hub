@@ -1,12 +1,12 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { responses } from "./RSVPList";
+import { RSVPPlayerView, RSVPExecView } from "./RSVPList";
 import { StatusPill } from "../StatusPill";
 import useScrollFade from "@/hooks/useScrollFade";
 
 type props = {
-    rsvp: responses
+    rsvp: RSVPPlayerView | RSVPExecView;
 };
 
 export default function RVSPTable({ rsvp }: props) {

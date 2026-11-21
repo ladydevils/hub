@@ -20,29 +20,27 @@ type member = {
     name: string
 }
 
-type RSVPPlayerView = {
+export type RSVPPlayerView = {
     yes?: member[];
     maybe?: member[];
 };
 
 
-type RSVPExecView = RSVPPlayerView & {
+export type RSVPExecView = RSVPPlayerView & {
     no?: member[];
     pending?: member[];
 };
 
-type RegisterPlayerView = {
+export type RegisterPlayerView = {
     registered?: member[];
 };
 
-type RegisterExecView = RegisterPlayerView & {
+export type RegisterExecView = RegisterPlayerView & {
     notRegistered?: member[];
     noResponse?: member[];
 };
 
-
-
-export type responses = RSVPPlayerView | RSVPExecView | RegisterPlayerView | RegisterExecView;
+type responses = RSVPPlayerView | RSVPExecView | RegisterPlayerView | RegisterExecView;
 
 export function RVSPList({ label, handleRSVPOpen, handleRSVPClose, pageScrollRef, maxHeight, isTournament=false }: props) {
 
@@ -72,18 +70,18 @@ export function RVSPList({ label, handleRSVPOpen, handleRSVPClose, pageScrollRef
 
     // fetch the responses
     
-    // const rsvp: responses = {
-    //     yes: [{id: 1, name: "Anita Maxwynn"}, {id: 2, name:"Ra'Kira Nelson"}, {id: 3, name: "Akeela and the Bee"}, {id: 4, name: "Anita Maxwynn 2.0"}, {id: 5, name: "Bobby Builder"}, {id: 6, name: "Someone Else"}, {id: 7, name: "Bobby Builder"}, {id: 8, name: "Jose Martinez"}],
-    //     maybe: [{id: 5, name: "Bobby Builder"}, {id: 9, name: "Someone Else"}, {id: 8, name: "Jose Martinez"}],
-    //     no: [{id: 3, name: "Akeela and the Bee"}, {id: 8, name: "Jose Martinez"}, {id: 1, name: "Anita Maxwynn"}, {id: 2, name: "Ra'Kira Nelson"} ],
-    //     pending: [{id: 10, name: "Nobody Greater"}, {id: 11, name: "I looked High and Low"}, {id: 12, name: "Didn't Find Nobody"}]
-    // };
-
     const rsvp: responses = {
-        registered: [{id: 1, name: "Anita Maxwynn"}, {id: 2, name:"Ra'Kira Nelson"}, {id: 3, name: "Akeela and the Bee"}, {id: 4, name: "Anita Maxwynn 2.0"}, {id: 5, name: "Bobby Builder"}, {id: 6, name: "Someone Else"}, {id: 7, name: "Bobby Builder"}, {id: 8, name: "Jose Martinez"}, {id: 10, name: "We are so back!"}],
-        notRegistered: [{id: 5, name: "Bobby Builder"}, {id: 9, name: "Someone Else"}, {id: 13, name: "Handy Mandy"}],
-        noResponse: [ {id: 12, name: "Bowser's Galaxy Generator"}, {id: 11, name: "naur-io"}]
+        yes: [{id: 1, name: "Anita Maxwynn"}, {id: 2, name:"Ra'Kira Nelson"}, {id: 3, name: "Akeela and the Bee"}, {id: 4, name: "Anita Maxwynn 2.0"}, {id: 5, name: "Bobby Builder"}, {id: 6, name: "Someone Else"}, {id: 7, name: "Bobby Builder"}, {id: 8, name: "Jose Martinez"}],
+        maybe: [{id: 5, name: "Bobby Builder"}, {id: 9, name: "Someone Else"}, {id: 8, name: "Jose Martinez"}],
+        no: [{id: 3, name: "Akeela and the Bee"}, {id: 8, name: "Jose Martinez"}, {id: 1, name: "Anita Maxwynn"}, {id: 2, name: "Ra'Kira Nelson"} ],
+        pending: [{id: 10, name: "Nobody Greater"}, {id: 11, name: "I looked High and Low"}, {id: 12, name: "Didn't Find Nobody"}]
     };
+
+    // const rsvp: responses = {
+    //     registered: [{id: 1, name: "Anita Maxwynn"}, {id: 2, name:"Ra'Kira Nelson"}, {id: 3, name: "Akeela and the Bee"}, {id: 4, name: "Anita Maxwynn 2.0"}, {id: 5, name: "Bobby Builder"}, {id: 6, name: "Someone Else"}, {id: 7, name: "Bobby Builder"}, {id: 8, name: "Jose Martinez"}, {id: 10, name: "We are so back!"}],
+    //     notRegistered: [{id: 5, name: "Bobby Builder"}, {id: 9, name: "Someone Else"}, {id: 13, name: "Handy Mandy"}],
+    //     noResponse: [ {id: 12, name: "Bowser's Galaxy Generator"}, {id: 11, name: "naur-io"}]
+    // };
 
     const total = Object.values(rsvp).reduce((sum, array) => sum + array.length, 0)
 
@@ -98,23 +96,23 @@ export function RVSPList({ label, handleRSVPOpen, handleRSVPClose, pageScrollRef
             { isOpen && (
 
                 <>
-                    { isTournament ? 
+                    { !isTournament ? 
                      (
                         <div 
                             className="flex mx-auto bg-muted-1/20 border-1 border-muted-1/70 w-full rsvp-table:w-3/4 rounded-[8px] scrollbar-thin shadow-both-sides overflow-hidden"
                             style={{ height: maxHeight ?? 500 }}>
                             
-                            <RVSPTable rsvp={ rsvp }/>
+                            <RVSPTable rsvp={ rsvp as RSVPPlayerView | RSVPExecView  }/>
                             
                         </div>
-                     ) : 
-
+                     ) 
+                     : 
                      (
                         <div 
                             className="flex mx-auto bg-muted-1/20 border-1 border-muted-1/70 w-full rsvp-table:w-3/4 rounded-[8px] scrollbar-thin shadow-both-sides overflow-hidden"
                             style={{ height: maxHeight ?? 500 }}>
                             
-                            <RegisterTable responses={ rsvp }/>
+                            <RegisterTable responses={ rsvp as RegisterPlayerView | RegisterExecView }/>
                             
                         </div>
                      )
