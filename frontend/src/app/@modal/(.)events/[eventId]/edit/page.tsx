@@ -4,10 +4,10 @@
 import EditEventModalView from "@/components/static_export/EditEventModalView";
 
 export async function generateStaticParams() {
-    return [];
-}
+    return [{ eventId: "placeholder" }];
+};
 
 export default async function EditEventPage({ params }: { params: Promise<{ eventId: string }> }) {
     const { eventId } = await params;
     return <EditEventModalView eventId={eventId} />;
-}
+};
