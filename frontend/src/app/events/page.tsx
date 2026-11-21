@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useState, useMemo, useEffect } from "react";
+import { useContext, useState, useMemo, useEffect, Suspense } from "react";
 import { SemesterContext } from "@/contexts/SemesterContext"
 import Header from "@/components/Header";
 import EventToolBar from "./_components/EventToolBar";
@@ -11,7 +11,7 @@ import ScrollTop from "@/components/ScrollTop";
 
 import api from "@/lib/api";
 
-export default function Events() {
+export function EventsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -125,5 +125,13 @@ export default function Events() {
 
 
     </div>
+  );
+}
+
+export default function Events() {
+  return (
+    <Suspense fallback={null}>
+      <EventsContent />
+    </Suspense>
   );
 }
