@@ -1,0 +1,70 @@
+name: CI/CD
+
+on: 
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test_backend:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+      ALLOWED_ORIGINS: ${{ secrets.ALLOWED_ORIGINS }}
+      DEBUG: "False"
+    steps:
+      - uses: actions/checkout@v4 # copy repo to runner
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.4"
+      - run: pip install -r requirements.txt
+        working-directory: backend
+      - run: cat events_testing_suite.txt announcements_testing_suite.txt | xargs pytest
+        working-directory: backend
+
+  build:
+    needs: test_backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_URL: "https://vcm-55838.vm.duke.edu"
+
+  deploy-frontend:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to Vercel
+        working-directory: frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: npx vercel --prod --token=$VERCEL_TOKEN --yes
+
+  deploy-backend:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.event_name == 'push'
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: vcm-55838.vm.duke.edu
+          username: rln28
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: cd ~/lady-devils-hub/backend && chmod +x update.sh && ./update.sh
+
+
