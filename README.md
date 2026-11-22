@@ -111,7 +111,7 @@ For those who want to jump in and start running the project locally for developm
 
 5. Open the app in your browser:
    
-   `http://localhost:3000` or whatever port your terminal outputs when you run the command in [step 4](#frontend-setup).
+   [http://localhost:3000](http://localhost:3000) or whatever port your terminal outputs when you run the command in [step 4](#frontend-setup).
 
    > - Using the app from another device on your local network? Use your machine's local network IP instead (the same one from [Backend Setup, step 5](#backend-setup)) (e.g. `http://10.197.28.231:3000`)
    > - Whichever address you use here, make sure it matches an entry in `ALLOWED_ORIGINS` in [Backend Setup, step 5](#backend-setup) — otherwise the frontend's requests to the backend will be blocked by CORS.
