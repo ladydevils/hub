@@ -47,16 +47,17 @@ For those who want to jump in and start running the project locally for developm
    python3 -m venv venv
    ```
 
-3. Activate the virtual environment:
+3. Activate the virtual environment for running the backend:
    - On macOS/Linux: `source venv/bin/activate`
    - On Windows: `venv\Scripts\activate`
+   - > You can deactivate the venv by running `deactivate`
 
 4. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-5. Create a `.env` file in the same `backend` folder with the structure found in [.env.example](backend/.env.example):
+5. Create a file called `.env` in the same `backend` folder with the structure found in [.env.example](backend/.env.example):
    ```env
    # Example .env file
 
