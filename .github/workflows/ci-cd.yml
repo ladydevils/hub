@@ -21,7 +21,7 @@ jobs:
           python-version: "3.14"
       - run: pip install -r requirements.txt
         working-directory: backend
-      - run: cat events_testing_suite.txt announcements_testing_suite.txt | xargs pytest
+      - run: cat testing_suites/events_testing_suite.txt testing_suites/announcements_testing_suite.txt | xargs pytest
         working-directory: backend
 
   build:
