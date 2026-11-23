@@ -43,9 +43,14 @@ For those who want to jump in and start running the project locally for developm
    cd lady-devils-hub/backend
    ```
 2. Create a virtual environment:
-   ```bash
-   python3 -m venv venv
-   ```
+   - On macOS/Linux (Bash):
+     ```bash
+     python3.14 -m venv venv
+     ```
+   - On Windows (PowerShell):
+     ```powershell
+     py -3.14 -m venv venv
+     ```
 
 3. Activate the virtual environment for running the backend:
    - On macOS/Linux (Bash): `source venv/bin/activate`
@@ -124,4 +129,5 @@ For those who want to jump in and start running the project locally for developm
 - Email: rakira.nelson@duke.edu
 
 For something that's broken, a feature you'd like to see, or questions about contributing, see [Contributing & Project Management](#-contributing--project-management). For anything else, feel free to reach out directly via GitHub or email.
+
 
