@@ -32,6 +32,7 @@
 For those who want to jump in and start running the project locally for development, follow the instructions below:
 
 ### Prerequisites
+- Git installed
 - Python 3.14.4 installed
 - Node.js 26 installed
 - Access to the project's database connection strings (ask a maintainer for credentials). Needed in [Backend Setup, step 5](#backend-setup) to fill values for `DATABASE_URL=` and `TEST-DATABASE_URL=`
@@ -129,5 +130,6 @@ For those who want to jump in and start running the project locally for developm
 - Email: rakira.nelson@duke.edu
 
 For something that's broken, a feature you'd like to see, or questions about contributing, see [Contributing & Project Management](#-contributing--project-management). For anything else, feel free to reach out directly via GitHub or email.
+
 
 
