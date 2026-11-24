@@ -139,9 +139,9 @@ cat ~/.ssh/id_ed25519.pub
   ```
 
 8. Save and exit:
-  - `ctrl+O`/`command+O` to write the to the .env
+  - `ctrl+O` to write the to the .env
   - `enter` to save
-  - `ctrl+X`/`command+X` to exit
+  - `ctrl+X` to exit
 
 ---
 
