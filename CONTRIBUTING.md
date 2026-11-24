@@ -5,7 +5,7 @@
 
 ## Reporting Bugs & Requesting Features
 
-> Issues are this project tracks anything broken, missing, or worth improving, so it can be prioritized on the Project board (see more below).
+> Issues are this project tracks anything broken, missing, or worth improving, so it can be prioritized on the Project board (see [How Work is Tracked](#how-work-is-tracked) below).
 > 
 > Before creating an issue, please check existing issues to see if the problem has already been reported.
 
