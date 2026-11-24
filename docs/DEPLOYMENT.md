@@ -89,7 +89,7 @@ cat ~/.ssh/id_ed25519.pub
   ```bash
     python3 –-version
   ```
-  If it's already 3.14.4, continue to the step 3. If it's a different version, install 3.14.4 specifically:​
+  If it's already 3.14.x, continue to the step 3. If it's a different version, install 3.14 specifically:​
   ```bash
     sudo add-apt-repository ppa:deadsnakes/ppa
     sudo apt update
