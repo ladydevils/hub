@@ -53,7 +53,7 @@ backend/
     routers/                 — FastAPI endpoint definitions
     services/                - functions that support router endpoints (e.g., `create_event()` in `service_events.py`)
     testing/                 — pytest tests
-      unit/                  — tests that DONT require DB integration
+      unit/                  — tests that DON'T require DB integration
       integration/           — test that require integration
     utils/                   - helper functions used by services/ (e.g., formatting, calculations)
     config.py                — settings for FastAPI app (backend) loaded from .env
@@ -71,14 +71,14 @@ frontend/
     app/                       — Next.js App Router pages (events/, playbook/, etc.)
       @modal                   - parallel route for modal overlays
       admin/, events/, ...     — route folders each with one page.tsx per section
-      global.css               - site-wide styles (primarily global themes and custom animations)
+      globals.css               - site-wide styles (primarily global themes and custom animations)
       layout.tsx               - wraps every page and sets site metadata, loads fonts, and nests all app-wide providers
       page.tsx                 - the page UI for a given route (here is the homepage)
     assets/                    - static assets referenced by importing the (currently primarily icons)
     components/                — reusable, shared UI components (buttons, cards, etc.)
     contexts/                  - React Context providers for data shared across components
     hooks/                     - reuasble custom React hooks
-    libs/                      - helper/utility functions that don't require React logic
+    lib/                       - helper/utility functions that don't require React logic
 ```
 
 ### Worked Example
@@ -140,7 +140,7 @@ Then add the new test's file path to whichever `testing_suites/*.txt` file it be
 
 ### Current Constraints
 
-1. The backend is hosted on a Duke VM that expires at the end of each semester, requiring it to be re-provisioned each term (see [Current Deployment](DEPLOYMENT.md). The VM is also limited to 4.0 GB RAM, 2 processors, and 50 GB disk space.
+1. The backend is hosted on a Duke VM that expires at the end of each semester, requiring it to be re-provisioned each term (see [Current Deployment](DEPLOYMENT.md)). The VM is also limited to 4.0 GB RAM, 2 processors, and 50 GB disk space.
 2. The frontend is hosted on Vercel's free (Hobby) plan, which has usage limits that could potentially become a constraint as the app grows.
 3. Only backend tests have been written so far. Frontend unit tests (planned: Vitest) and end-to-end tests (planned: Playwright) haven't been started yet.
 4. User authentication has not been implemented. The plan is to use Duke's SSO rather than build custom auth, pending confirmation that's feasible. Because of this, user-specific features (current user, personal profiles) are currently built against a hardcoded test user rather than real session data.
@@ -151,5 +151,5 @@ Then add the new test's file path to whichever `testing_suites/*.txt` file it be
 ### Incomplete Features
 
 8. RSVP is not implemented on the backend — the database tables exist and the frontend has been built against the expected response shape (to test how the components should look), but nothing is connected yet.
-10. Roster and Playbook pages have frontend and database tables, but no backend logic yet. Roster creation also depends on user creation, which isn't possible until authentication is implemented. Playbook images are currently sitting in `frontend/public/`, but long-term image storage (cloud storage, Google Drive, AWS) hasn't been decided yet.
-11. Travel and lodging logistics are not yet implemented — database schema exists and some frontend work has started, but backend logic hasn't been built yet.
+9. Roster and Playbook pages have frontend and database tables, but no backend logic yet. Roster creation also depends on user creation, which isn't possible until authentication is implemented. Playbook images are currently sitting in `frontend/public/`, but long-term image storage (cloud storage, Google Drive, AWS) hasn't been decided yet.
+10. Travel and lodging logistics are not yet implemented — database schema exists and some frontend work has started, but backend logic hasn't been built yet.
