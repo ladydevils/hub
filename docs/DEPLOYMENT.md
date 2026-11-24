@@ -244,7 +244,7 @@ You can install Caddy, by running each of the lines, in order, below (references
   Copy the entire, including the `-----BEGIN...-----` and `-----END...-----` lines. 
 
 4. Go to the [GitHub Repo](https://github.com/rakiranelson/lady-devils-hub) -> settings -> Secrets and variables -> Actions -> Manage environment secrets -> production.
-   Scroll down and then edit the "VM_SSH_KEY" secret. Paste the private SSH key output you copied.
+   Scroll down and then edit the `VM_SSH_KEY` secret. Paste the private SSH key output you copied.
 
 
 5. Set up the passwordless sudo rule so GitHub Actions can deploy the backend:
@@ -278,3 +278,54 @@ The backend is now live and will survive reboots, SSH disconnects, and crashes. 
 
 From here on, deploying updates is automatic. Pushing or Pull Requests to `main` triggers the CI/CD pipelin which pulls the latest code and restarts the service without any manual steps.
 
+---
+
+## Frontend
+
+**How it's set up:** 
+
+The frontend is hosted on Vercel, imported directly from this GitHub repo with the project's Root Directory set to `frontend/`. GitHub Actions handles deployment automatically using three secrets (`VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`) to authenticate and deploy on Vercel's behalf.
+
+For setting this up from scratch (e.g., a new Vercel account or project), here's what's needed:
+
+1. Import the repo into Vercel:
+  - Go to [vercel.com/new](https://vercel.com/new), import `rakiranelson/lady-devils-hub`, and set **Root Directory** to `frontend`.
+  - Add the production environment variables Vercel needs under Project Settings -> Environment Variables. In this case, add the key value pair: (`NEXT_PUBLIC_API_URL`, `https://vcm-55838.vm.duke.edu/`) 
+
+2. Get a Vercel access token:
+  - Go to [Vercel's account tokens page](https://vercel.com/account/tokens) and create a new token called `GITHUB_ACTIONS`.
+  - Copy this token, and go to the [GitHub Repo](https://github.com/rakiranelson/lady-devils-hub) -> settings -> Secrets and variables -> Actions -> Manage environment secrets -> production
+  -  Scroll down and then edit the `VERCEL_TOKEN` secret. Paste the copied token here.
+
+3. Get the `ORG_ID` and `PROJECT_ID`:
+  - Go back to Vercel and go to your created Team (not project). Go to settings and scroll to find the "Team ID". Copy this and paste it as the `VERCEL_ORG_ID` secret in GitHub.
+  - Now on Vercel, go to the created project.  Go to settings and scroll to find the "Project ID". Copy this and paste it as the `VERCEL_PROJECT_ID` secret in GitHub.
+
+4. Make sure all 3 GitHub Actions secrets were added/updated to ensure the CI/CD pipeline works as intended.
+
+---
+
+## Database
+
+### Set Up the Database (Supabase)
+
+**How it's set up:** 
+
+The database is hosted on Supabase (managed PostgreSQL) as two separate projects: one for production data (`DATABASE_URL`) and one dedicated to automated testing (`TEST_DATABASE_URL`). These are separate because the test suite wipes and recreates the entire schema before every run (see `conftest.py`), which would destroy real data if it pointed at the same project as production.
+
+For setting this up from scratch, repeat these steps once for the production project and once for the test project:
+
+1. Create a new project at [supabase.com](https://supabase.com/dashboard/projects) — give it a clear name (e.g., "lady-devils-hub-prod" and "lady-devils-hub-test") so the two aren't confused later.
+
+2. Load the schema:
+  - In the Supabase dashboard, go to the **SQL Editor**.
+  - Paste the contents of `db/schema.sql` and run it.
+
+4. Get the connection string:
+  - Search and navigate to "Connection string", and copy the URI format connection string.
+  - Fill in the actual database password in the `[YOUR-DATABASE-PASSWORD]` spot
+    > You can have Supabase generate one for you (this is preferred)
+    
+6. Add it as a secret:
+  - For the production project's connection string, add it to `backend/.env` locally as `DATABASE_URL`, and as a GitHub Actions secret named `DATABASE_URL`.
+  - For the test project's connection string, do the same as `TEST_DATABASE_URL`.
