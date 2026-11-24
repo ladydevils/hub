@@ -220,6 +220,7 @@ You can install Caddy, by running each of the lines, in order, below (references
   ```Bash
      sudo systemctl status lady-devils-hub
    ```
+> Note: You can also stop with `sudo systemctl stop lady-devils-hub` and restart with `sudo systemctl restart lady-devils-hub`
 ---
 
 ### 4. Set Up Config for GitHub Actions
