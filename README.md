@@ -77,7 +77,8 @@ For those who want to jump in and start running the project locally for developm
     DEBUG=False
    ```
    > If you want to use your local network IP, you can find this by typing the following in a terminal:
-   > - On macOS/Linux (Bash): `ifconfig`/`ip addr`
+   > - On macOS: `ipconfig getifaddr en0`
+   > - Linux (Bash): `ip addr`
    > - On Windows (PowerShell): `ipconfig`
    
    > This IP is assigned by whatever network you're connected to, so it changes when you switch Wi-Fi networks. If it does changes, update it here.
