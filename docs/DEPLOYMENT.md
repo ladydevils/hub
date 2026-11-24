@@ -88,7 +88,7 @@ cat ~/.ssh/id_ed25519.pub
   
 2. Check Python version :
   ```bash
-    python3 –-version
+    python3 --version
   ```
   If it's already 3.14.x, continue to the step 3. If it's a different version, install 3.14 specifically:​
   ```bash
@@ -97,7 +97,7 @@ cat ~/.ssh/id_ed25519.pub
     sudo apt install python3.14
   ```
 
-2. Run the following so you have the packages to create a virtual environment later:
+3. Run the following so you have the packages to create a virtual environment later:
   ```bash
     sudo apt install python3.14-venv -y
   ```
@@ -241,7 +241,7 @@ You can install Caddy, by running each of the lines, in order, below (references
   ```Bash
      cat ~/.ssh/github-actions-key
    ```
-  Copy the entire, including the `-----BEGIN...-----` and `-----END...-----` lines. 
+  Copy the entire key, including the `-----BEGIN...-----` and `-----END...-----` lines. 
 
 4. Go to the [GitHub Repo](https://github.com/rakiranelson/lady-devils-hub) -> settings -> Secrets and variables -> Actions -> Manage environment secrets -> production.
    Scroll down and then edit the `VM_SSH_KEY` secret. Paste the private SSH key output you copied.
