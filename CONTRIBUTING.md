@@ -26,7 +26,7 @@ A title should be concise, but specific enough that someone scanning the issue l
 
 **Which Template do I Use?**
 - Reporting something broken? Use the **Bug Report** template.
-- Requesting something new, an improvement, or a usability fix? Use the **Feature / Enhancement / Usability Request** template.
+- Requesting something new, an improvement, or a usability fix? Use the **Feature Request** template and use the label(s) that matches the request.
 
 ## How Work Is Tracked
 
