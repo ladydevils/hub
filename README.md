@@ -35,7 +35,7 @@ For those who want to jump in and start running the project locally for developm
 - Git installed
 - Python 3.14 installed
 - Node.js 26 installed
-- Access to the project's database connection strings (ask a maintainer for credentials). Needed in [Backend Setup, step 5](#backend-setup) to fill values for `DATABASE_URL=` and `TEST-DATABASE_URL=`
+- Access to the project's database connection strings (ask a maintainer for credentials). Needed in [Backend Setup, step 5](#backend-setup) to fill values for `DATABASE_URL=` and `TEST_DATABASE_URL=`
 
 ### Backend Setup
 1. Clone the repo and move into the backend folder where the following steps should take place:
@@ -132,7 +132,7 @@ For those who want to jump in and start running the project locally for developm
 - GitHub: [@rakiranelson](https://github.com/rakiranelson)
 - Email: rakira.nelson@duke.edu
 
-For something that's broken, a feature you'd like to see, or questions about contributing, see [Contributing & Project Management](#-contributing--project-management). For anything else, feel free to reach out directly via GitHub or email.
+For something that's broken, a feature you'd like to see, or questions about contributing, see [Contributing & Project Management](CONTRIBUTING.md). For anything else, feel free to reach out directly via GitHub or email.
 
 
 
