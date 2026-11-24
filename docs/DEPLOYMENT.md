@@ -98,7 +98,7 @@ cat ~/.ssh/id_ed25519.pub
 
 2. Run the following so you have the packages to create a virtual environment later:
   ```bash
-    sudo apt install python3.14-venv -y 
+    sudo apt install python3.14-venv -y
   ```
 
 4. Check if git is installed:
@@ -107,9 +107,8 @@ cat ~/.ssh/id_ed25519.pub
   ```
   If git is installed, continue to step 5. Otherwise, install git: 
   ```bash
-    sudo apt install git -y 
+    sudo apt install git -y
   ```
-
 
 5. Clone the repo and cd into the backend directory:
   ```bash
@@ -120,8 +119,8 @@ cat ~/.ssh/id_ed25519.pub
 6. Create the virtual environment and install required Python packages:
   ```bash
     python3.14 -m venv venv
-    source venv/bin/activate 
-    pip install -r requirements.txt   
+    source venv/bin/activate
+    pip install -r requirements.txt
   ```
 
 7. Create the `.env` file:
@@ -146,3 +145,134 @@ cat ~/.ssh/id_ed25519.pub
 ---
 
 ### 2. Set Up Caddy
+You can install Caddy, by running each of the lines, in order, below (references [this tutorial](https://vultr.hashnode.dev/installing-caddy-web-server-on-ubuntu-26-04?utm_source=hashnode&utm_medium=feed)):
+
+**1. Install Caddy**
+  ```bash
+    sudo apt update
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+    curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+    sudo apt update
+    sudo apt install caddy -y
+    caddy version
+  ```
+
+**2. Configure Caddy**
+1. Edit Caddy's config file:
+   ```caddyfile
+    vcm-xxxxx.vm.duke.edu {
+      reverse_proxy localhost:8000
+    }
+   ```
+   > Where `xxxxx` are the numbers from your Hostname
+   
+   Then save and exit (`ctrl+O`, `enter`, then `ctrl+X`)
+
+2. Then enable and start Caddy to apply the configurations:
+   ```Bash
+     sudo systemctl enable caddy
+     sudo systemctl start caddy
+   ```
+  
+3. Confirm that caddy is running:
+  ```Bash
+     sudo systemctl status caddy
+   ```
+
+---
+
+### 3. Set Up systemd Service
+> The purpose of this service is to allow the backend to run permanently even after the SSH connection disconnects
+
+1. Create the service file
+   ```Bash
+     sudo nano /etc/systemd/system/lady-devils-hub.service
+   ```
+
+2. Paste this in the opened file, replacing `<netid>` with your Duke NetID:
+  ```Bash
+    [Unit]
+    Description=Lady Devils Hub Backend
+    After=network.target
+    
+    [Service]
+    User=<netid>
+    WorkingDirectory=/home/<netid>/lady-devils-hub/backend
+    ExecStart=/home/<netid>/lady-devils-hub/backend/venv/bin/python main.py
+    Restart=always
+    RestartSec=5
+    
+    [Install]
+    WantedBy=multi-user.target
+   ```
+
+  Then save and exit (`ctrl+O`, `enter`, then `ctrl+X`)
+
+3. Reload systemd and start the service:
+  ```Bash
+    sudo systemctl daemon-reload
+    sudo systemctl enable lady-devils-hub
+    sudo systemctl start lady-devils-hub 
+   ```
+
+4. Confirm the backend is running:
+  ```Bash
+     sudo systemctl status lady-devils-hub
+   ```
+---
+
+### 4. Set Up Config for GitHub Actions
+> This is important to set up so the CI/CD pipeline works
+
+1. Generate a new SSH key pair for the Github and the VM (This should be done in the VM terminal):
+  ```Bash
+     ssh-keygen -t ed25519 -f ~/.ssh/github-actions-key -N "" 
+   ```
+  > Note: `-f ~/.ssh/github-actions-key` is explicitly setting the name of the SSH key and `-N ""` is explicitly setting no passphrase
+
+2. Add this public SSH key to the VM's list of public keys:
+  ```Bash
+     cat ~/.ssh/github-actions-key.pub >> ~/.ssh/authorized_keys
+   ```
+
+3. Print the private SSH key so you can copy it:
+  ```Bash
+     cat ~/.ssh/github-actions-key
+   ```
+  Copy the entire, including the `-----BEGIN...-----` and `-----END...-----` lines. 
+
+4. Go to the [GitHub Repo](https://github.com/rakiranelson/lady-devils-hub) -> settings -> Secrets and variables -> Actions -> Manage environment secrets -> production.
+   Scroll down and then edit the "VM_SSH_KEY" secret. Paste the private SSH key output you copied.
+
+
+5. Set up the passwordless sudo rule so GitHub Actions can deploy the backend:
+  ```Bash
+     sudo visudo -f /etc/sudoers.d/lady-devils-hub
+   ```
+  And then add this line:
+  ```Bash
+    <netid> ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart lady-devils-hub 
+  ```
+  Then save and exit (`ctrl+O`, `enter`, then `ctrl+X`)
+
+6. Check to see if your changes are in the file:
+  ```Bash
+    sudo visudo
+   ```
+  Scroll to the bottom of the file, and make sure it's formatted like:
+  ```Bash
+    <netid> ALL=(ALL) ALL
+    @includedir /etc/sudoers.d
+   ```
+  And **NOT**:
+  ```Bash
+    @includedir /etc/sudoers.d
+    <netid> ALL=(ALL) ALL
+  ```
+
+---
+
+The backend is now live and will survive reboots, SSH disconnects, and crashes. You can confirm it's working by visiting `https://vcm-xxxxx.vm.duke.edu`. 
+
+From here on, deploying updates is automatic. Pushing or Pull Requests to `main` triggers the CI/CD pipelin which pulls the latest code and restarts the service without any manual steps.
+
