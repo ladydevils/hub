@@ -91,6 +91,7 @@ For those who want to jump in and start running the project locally for developm
    ```bash
    uvicorn main:app --reload
    ```
+   > You can stop running the server by pressing `ctrl+C`.
 
 ### Frontend Setup
 
@@ -115,6 +116,7 @@ For those who want to jump in and start running the project locally for developm
    ```bash
    npm run dev
    ```
+   > You can stop running the server by pressing `ctrl+C`.
 
 5. Open the app in your browser:
    
