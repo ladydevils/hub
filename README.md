@@ -63,7 +63,7 @@ For those who want to jump in and start running the project locally for developm
    pip install -r requirements.txt
    ```
 
-5. Create a file called `.env` in the same `backend` folder with the structure found in [.env.example](backend/.env.example):
+5. Create a file called `.env` in the same `backend` directory with the structure found in [.env.example](backend/.env.example):
    ```env
    # Example .env file
 
