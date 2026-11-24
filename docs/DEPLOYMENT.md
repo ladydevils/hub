@@ -75,6 +75,7 @@ cat ~/.ssh/id_ed25519.pub
     ssh <netid>@vcm-xxxxx.vm.duke.edu
     ```
     > You should replace `<netid>` with your NetID and `xxxxx` with the numbers from your Hostname
+5. Type `y` to confirm adding the key connection to the VM.
 
 ---
 
